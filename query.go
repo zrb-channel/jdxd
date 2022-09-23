@@ -5,9 +5,9 @@ import (
 	"encoding/base64"
 	"errors"
 	json "github.com/json-iterator/go"
-	"net/http"
 	"github.com/zrb-channel/utils"
 	"github.com/zrb-channel/utils/hash"
+	"net/http"
 	"strings"
 )
 
@@ -17,6 +17,10 @@ import (
 // @param req
 // @date 2022-09-21 17:18:40
 func Query(ctx context.Context, conf *Config, req *QueryRequest) (*QueryItem, error) {
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+
 	base, err := DataSign(conf, req)
 	if err != nil {
 		return nil, err
